@@ -259,7 +259,7 @@ const JobDetail = () => {
             <div className="lg:col-span-8 md:col-span-6">
               <h5 className="text-lg font-semibold">Job Description:</h5>
               {description}
-              <ModalForm />
+              <ModalForm id={_id} deadline={deadLine} />
             </div>
           </div>
         </div>

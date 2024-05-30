@@ -24,7 +24,7 @@ const savedTheme = localStorage.getItem('theme') || 'light';
 
 
     const { user, logout } = useContext(AuthContext);
-
+  // console.log(user?.photoURL);
     const handleSignOut = () => {
       logout().then().catch();
     };
@@ -88,7 +88,7 @@ const savedTheme = localStorage.getItem('theme') || 'light';
               ? "text-blue-800  underline font-bold underline-offset-8 hover:!bg-white hover:!text-blue-800 "
               : " !text-blue-800 font-bold hover:!bg-white"
           }
-          to="/appliedjob"
+          to="/appliedjobs"
         >
           Applied Jobs
         </NavLink>

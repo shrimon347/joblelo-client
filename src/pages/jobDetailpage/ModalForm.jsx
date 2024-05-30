@@ -1,4 +1,69 @@
-const ModalForm = () => {
+/* eslint-disable react/prop-types */
+import { useContext } from "react";
+import Swal from 'sweetalert2'
+import { AuthContext } from "../../provider/AuthProvider";
+const ModalForm = ({id,deadline}) => {
+  const {user} = useContext(AuthContext)
+  const handleJobapplied = (event) => {
+    event.preventDefault();
+
+    const currentDate = new Date();
+    const jobDeadline = new Date(deadline);
+
+    // console.log(currentDate, jobDeadline);
+    document.getElementById("my_modal_4").close();
+    if (currentDate > jobDeadline) {
+      Swal.fire({
+        title: 'Expired!',
+        text: 'The application deadline has passed.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+      event.target.reset()
+      return;
+    }
+
+    const form = event.target;
+    const companyName = form.company_name.value
+    const resumeLink = form.resumelink.value
+    const newJobapply = {email:user.email,id,companyName,resumeLink}
+    // console.log(newJobapply);
+    fetch(`http://localhost:5000/appliedjobs?email=${user.email}&id=${id}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.length > 0) {
+          Swal.fire({
+            title: 'Already Applied!',
+            text: 'You have already applied for this job.',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+          });
+        } else {
+          document.getElementById("my_modal_4").close();
+          fetch('http://localhost:5000/appliedjobs', {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify(newJobapply)
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (data.insertedId) {
+                Swal.fire({
+                  title: 'Success!',
+                  text: 'Job applied successfully.',
+                  icon: 'success',
+                  confirmButtonText: 'Done'
+                });
+              }
+            });
+
+          event.target.reset();
+        }
+      });
+  };
+
   return (
     <div>
       <div className="mt-5">
@@ -8,10 +73,10 @@ const ModalForm = () => {
         >
           Apply Now
         </button>
-        <dialog id="my_modal_4" className="modal">
+        <dialog id="my_modal_4" className="modal -z-50">
           <div className="modal-box w-1/2 max-w-2xl">
             <p className="text-xl font-bold text-center mb-5 mt-5">Apply Job</p>
-          <form >
+          <form  onSubmit={handleJobapplied}>
               <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
                 <div className="w-full">
                   <label
@@ -21,11 +86,12 @@ const ModalForm = () => {
                     Email:
                   </label>
                   <input
+                  disabled
                     type="email"
                     name="email"
+                    value={user.email}
                     className="input input-primary w-full"
                     placeholder="Email"
-                    required
                   />
                 </div>
                 <div className="w-full">

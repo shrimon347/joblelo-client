@@ -1,38 +1,71 @@
-import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import Explore from "../../components/shared/Explore";
-import Footer from "../../components/shared/Footer";
 import Navbar from "../../components/shared/Navbar";
 import Support from "../../components/shared/Support";
-import Herojobs from "./Herojobs";
-import Jobpage from "./JobPage";
+import { AuthContext } from "../../provider/AuthProvider";
+import JobPage from "../alljobpage/JobPage";
+import HeroApply from "./HeroApply";
+import Footer from "../../components/shared/Footer";
 
-const AllJobs = () => {
-  const alljobs = useLoaderData();
+const Applied = () => {
+  const { user } = useContext(AuthContext);
   const [country, setCountry] = useState("");
   const [jobType, setJobType] = useState("");
+  const [appliedJobs, setAppliedJobs] = useState([]);
+  const [jobs, setJobs] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
+  const [filteredapplyJobs, setFilteredapplyJobs] = useState(filteredJobs);
 
-  const [filteredJobs, setFilteredJobs] = useState(alljobs);
+
+
+  useEffect(() => {
+    const fetchAppliedJobs = async () => {
+      const res = await fetch(
+        `http://localhost:5000/appliedjobs?email=${user.email}`
+      );
+      const data = await res.json();
+      setAppliedJobs(data);
+    };
+
+    const fetchJobs = async () => {
+      const res = await fetch(`http://localhost:5000/jobpost`);
+      const data = await res.json();
+      setJobs(data);
+    };
+
+    fetchAppliedJobs();
+    fetchJobs();
+  }, [user.email]);
+
+  useEffect(() => {
+    const filterJobs = () => {
+      const appliedJobIds = appliedJobs.map((job) => job.id);
+      const filtered = jobs.filter((job) => appliedJobIds.includes(job._id));
+      setFilteredJobs(filtered);
+    };
+
+    filterJobs();
+  }, [appliedJobs, jobs]);
+
 
   const handleJobFilter = (e) => {
     e.preventDefault();
-    const filtered = alljobs.filter((job) => {
+    const filtered = filteredJobs.filter((job) => {
       return (
         (country === "" || job.country === country) &&
         (jobType === "" || job.JobType === jobType)
       );
     });
 
-    setFilteredJobs(filtered);
+    setFilteredapplyJobs(filtered);
   };
 
   return (
     <div>
       <Navbar />
-      <Herojobs />
-
-      <div className="max-w-7xl mx-auto mt-[50px]">
-        <div className="bg-white dark:bg-slate-800 border-0 shadow rounded p-3 mt-10">
+      <HeroApply />
+      <div className="max-w-7xl mx-auto">
+      <div className="bg-white dark:bg-slate-800 border-0 shadow rounded p-3 mt-10">
           <form onSubmit={handleJobFilter}>
             <div className="registration-form text-dark text-start">
               <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:gap-5 gap-6">
@@ -66,18 +99,24 @@ const AllJobs = () => {
             </div>
           </form>
         </div>
-
         <div className="grid grid-cols-1 gap-[30px] mt-[30px]">
-          {filteredJobs.map((job) => (
-            <Jobpage key={job._id} job={job} />
-          ))}
+        {filteredapplyJobs.length > 0 ? (
+            filteredapplyJobs.map((job) => (
+              <JobPage key={job._id} job={job} />
+            ))
+          ) : (
+            filteredJobs.map((job) => (
+              <JobPage key={job._id} job={job} />
+            ))
+          )}
         </div>
         <Support />
         <Explore />
+        
       </div>
       <Footer />
     </div>
   );
 };
 
-export default AllJobs;
+export default Applied;
