@@ -9,6 +9,9 @@ import JobDetail from "../pages/jobDetailpage/JobDetail";
 import AllJobs from "../pages/alljobpage/AllJobs";
 import PrivateRoute from "./PrivateRoute";
 import Applied from "../pages/appliedpage/Applied";
+import MyJobPost from "../pages/myjobpage/MyJobPost";
+import UpdateJob from "../pages/updatepage/UpdateJob";
+import ProfileUpdate from "../pages/profileupdate/ProfileUpdate";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/update-profile",
+        element: <PrivateRoute><ProfileUpdate /></PrivateRoute>,
       },
       {
         path: "/login",
@@ -34,16 +41,24 @@ const router = createBrowserRouter([
       {
         path: "/job-detail/:id",
         element: <PrivateRoute><JobDetail /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:5000/jobpost/${params.id}`)
+        loader: ({ params }) => fetch(`https://joblelo-server.vercel.app/jobpost/${params.id}`)
       },
       {
         path: "/alljobs",
         element: <AllJobs />,
-        loader: () => fetch(`http://localhost:5000/jobpost`)
       },
       {
         path: "/appliedjobs",
         element: <PrivateRoute><Applied /></PrivateRoute>,
+      },
+      {
+        path: "/myjobs",
+        element: <PrivateRoute><MyJobPost /></PrivateRoute>,
+      },
+      {
+        path: "/updatejobpost/:id",
+        element: <PrivateRoute><UpdateJob /></PrivateRoute>,
+        loader: ({ params }) => fetch(`https://joblelo-server.vercel.app/jobpost/${params.id}`)
       },
     ],
   },

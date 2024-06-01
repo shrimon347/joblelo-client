@@ -5,11 +5,15 @@ import SingleJob from "./SingleJob";
 const TabJob = () => {
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("http://localhost:5000/jobpost")
+    fetch("https://joblelo-server.vercel.app/jobpost")
       .then((res) => res.json())
-      .then((data) => setJobs(data));
+      .then((data) => {
+        setJobs(data)
+        setLoading(false)
+      });
   }, []);
 
   const handleJobFilter = (filter) => {
@@ -26,6 +30,7 @@ const TabJob = () => {
       filtered = jobs.filter((job) => job.JobType === "Office Work");
     }
     setFilteredJobs(filtered);
+    
     // console.log(jobs);
   };
 
@@ -67,39 +72,65 @@ const TabJob = () => {
           </TabList>
 
           <TabPanel>
-            <div className="grid md:grid-cols-2 mt-8 gap-[30px]">
+            {
+              loading ? (<div className="text-center mt-10"><span className="loading loading-bars  loading-lg"></span></div>)
+              : (
+                <div className="grid md:grid-cols-2 mt-8 gap-[30px]">
+            
               {jobs.map((job) => (
                 <SingleJob job={job} key={job._id} />
               ))}
             </div>
+              )
+            }
           </TabPanel>
           <TabPanel>
-            <div className="grid md:grid-cols-2 mt-8 gap-[30px]">
+            {
+              loading ? (<div className="text-center mt-10"><span className="loading loading-bars  loading-lg"></span></div>) 
+              : (
+                <div className="grid md:grid-cols-2 mt-8 gap-[30px]">
               {filteredJobs.map((job) => (
                 <SingleJob job={job} key={job._id} />
               ))}
             </div>
+              )
+            }
           </TabPanel>
           <TabPanel>
-            <div className="grid md:grid-cols-2 mt-8 gap-[30px]">
+          {
+              loading ? (<div className="text-center mt-10"><span className="loading loading-bars  loading-lg"></span></div>) 
+              : (
+                <div className="grid md:grid-cols-2 mt-8 gap-[30px]">
               {filteredJobs.map((job) => (
                 <SingleJob job={job} key={job._id} />
               ))}
             </div>
+              )
+            }
           </TabPanel>
           <TabPanel>
-            <div className="grid md:grid-cols-2 mt-8 gap-[30px]">
+          {
+              loading ? (<div className="text-center mt-10"><span className="loading loading-bars  loading-lg"></span></div>) 
+              : (
+                <div className="grid md:grid-cols-2 mt-8 gap-[30px]">
               {filteredJobs.map((job) => (
                 <SingleJob job={job} key={job._id} />
               ))}
             </div>
+              )
+            }
           </TabPanel>
           <TabPanel>
-            <div className="grid md:grid-cols-2 mt-8 gap-[30px]">
+          {
+              loading ? (<div className="text-center mt-10"><span className="loading loading-bars  loading-lg"></span></div>) 
+              : (
+                <div className="grid md:grid-cols-2 mt-8 gap-[30px]">
               {filteredJobs.map((job) => (
                 <SingleJob job={job} key={job._id} />
               ))}
             </div>
+              )
+            }
           </TabPanel>
         </Tabs>
       </div>

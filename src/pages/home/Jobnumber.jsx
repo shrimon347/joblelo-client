@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Jobnumber = () => {
   return (
     <div className="max-w-7xl mx-auto mt-[100px]">
@@ -42,15 +44,15 @@ const Jobnumber = () => {
         <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 mt-8 gap-[30px]">
           <div className="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6">
             <div className="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12">
-              <img src="" className="size-8" alt="" />
+              <img src="https://i.ibb.co/12ngBc6/3.jpg" className="size-8" alt="" />
             </div>
             <div className="mt-4">
-              <a
+              <Link
                 className="text-lg hover:text-emerald-600 font-semibold"
-                href="/employer-detail/1"
+                
               >
                 Facebook
-              </a>
+              </Link>
               <p className="text-slate-400 mt-2">
                 Digital Marketing Solutions for Tomorrow
               </p>
@@ -82,18 +84,18 @@ const Jobnumber = () => {
           <div className="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6">
             <div className="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12">
               <img
-                src="/static/media/google-logo.28878765ba39f327cf3e.png"
+                src="https://i.ibb.co/12ngBc6/3.jpg"
                 className="size-8"
                 alt=""
               />
             </div>
             <div className="mt-4">
-              <a
+              <Link
                 className="text-lg hover:text-emerald-600 font-semibold"
-                href="/employer-detail/2"
+                
               >
                 google_logo
-              </a>
+              </Link>
               <p className="text-slate-400 mt-2">
                 Digital Marketing Solutions for Tomorrow
               </p>
@@ -125,18 +127,17 @@ const Jobnumber = () => {
           <div className="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6">
             <div className="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12">
               <img
-                src="/static/media/android.7467c3318ee65ddf6461.png"
+                src="https://i.ibb.co/12ngBc6/3.jpg"
                 className="size-8"
                 alt=""
               />
             </div>
             <div className="mt-4">
-              <a
+              <Link
                 className="text-lg hover:text-emerald-600 font-semibold"
-                href="/employer-detail/3"
               >
                 Android
-              </a>
+              </Link>
               <p className="text-slate-400 mt-2">
                 Digital Marketing Solutions for Tomorrow
               </p>
@@ -168,18 +169,18 @@ const Jobnumber = () => {
           <div className="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6">
             <div className="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12">
               <img
-                src="/static/media/lenovo-logo.ad2ec171d6df96c88b9e.png"
+                src="https://i.ibb.co/12ngBc6/3.jpg"
                 className="size-8"
                 alt=""
               />
             </div>
             <div className="mt-4">
-              <a
+              <Link
                 className="text-lg hover:text-emerald-600 font-semibold"
-                href="/employer-detail/4"
+               
               >
                 Lenovo
-              </a>
+              </Link>
               <p className="text-slate-400 mt-2">
                 Digital Marketing Solutions for Tomorrow
               </p>
@@ -210,15 +211,15 @@ const Jobnumber = () => {
           </div>
           <div className="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6">
             <div className="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12">
-              <img src="" className="size-8" alt="" />
+              <img src="https://i.ibb.co/12ngBc6/3.jpg" className="size-8" alt="" />
             </div>
             <div className="mt-4">
-              <a
+              <Link
                 className="text-lg hover:text-emerald-600 font-semibold"
-                href="/employer-detail/5"
+               
               >
                 spotify
-              </a>
+              </Link>
               <p className="text-slate-400 mt-2">
                 Digital Marketing Solutions for Tomorrow
               </p>
@@ -249,16 +250,16 @@ const Jobnumber = () => {
           </div>
           <div className="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6">
             <div className="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12">
-              <img src="" className="size-8" alt="" />
+              <img src="https://i.ibb.co/12ngBc6/3.jpg" className="size-8" alt="" />
             </div>
             <div className="mt-4">
-              <a
+              <Link
                 className="text-lg hover:text-emerald-600 font-semibold"
-                href="/employer-detail/7"
+               
               >
                 {" "}
                 Circle CI
-              </a>
+              </Link>
               <p className="text-slate-400 mt-2">
                 Digital Marketing Solutions for Tomorrow
               </p>
@@ -290,18 +291,18 @@ const Jobnumber = () => {
           <div className="group relative p-6 rounded-md shadow dark:shadow-gray-700 mt-6">
             <div className="size-14 flex items-center justify-center bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md relative -mt-12">
               <img
-                src="/static/media/skype.ef82838bd043ebf691e8.png"
+                src="https://i.ibb.co/12ngBc6/3.jpg"
                 className="size-8"
                 alt=""
               />
             </div>
             <div className="mt-4">
-              <a
+              <Link
                 className="text-lg hover:text-emerald-600 font-semibold"
-                href="/employer-detail/8"
+                
               >
                 skype
-              </a>
+              </Link>
               <p className="text-slate-400 mt-2">
                 Digital Marketing Solutions for Tomorrow
               </p>

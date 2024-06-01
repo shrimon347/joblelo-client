@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Explore from "../../components/shared/Explore";
 import Footer from "../../components/shared/Footer";
 import Navbar from "../../components/shared/Navbar";
@@ -8,14 +7,29 @@ import Herojobs from "./Herojobs";
 import Jobpage from "./JobPage";
 
 const AllJobs = () => {
-  const alljobs = useLoaderData();
+  const [alljobs, setAlljobs] = useState([]);
   const [country, setCountry] = useState("");
   const [jobType, setJobType] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [filteredJobs, setFilteredJobs] = useState([]);
 
-  const [filteredJobs, setFilteredJobs] = useState(alljobs);
+  useEffect(() => {
+    fetch(`https://joblelo-server.vercel.app/jobpost`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAlljobs(data);
+        setFilteredJobs(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching jobs:", error);
+        setLoading(false);
+      });
+  }, []);
 
   const handleJobFilter = (e) => {
     e.preventDefault();
+    setLoading(true);
     const filtered = alljobs.filter((job) => {
       return (
         (country === "" || job.country === country) &&
@@ -24,6 +38,7 @@ const AllJobs = () => {
     });
 
     setFilteredJobs(filtered);
+    setLoading(false);
   };
 
   return (
@@ -52,6 +67,7 @@ const AllJobs = () => {
                   onChange={(e) => setCountry(e.target.value)}
                   value={country}
                 >
+                  <option value="">All Countries</option>
                   <option value="Bangladesh">Bangladesh</option>
                   <option value="India">India</option>
                   <option value="Canada">Canada</option>
@@ -68,9 +84,15 @@ const AllJobs = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-[30px] mt-[30px]">
-          {filteredJobs.map((job) => (
-            <Jobpage key={job._id} job={job} />
-          ))}
+          {loading ? (
+            <div className="text-center mt-10">
+              <span className="loading loading-bars loading-lg"></span>
+            </div>
+          ) : (
+            filteredJobs.map((job) => (
+              <Jobpage key={job._id} job={job} />
+            ))
+          )}
         </div>
         <Support />
         <Explore />

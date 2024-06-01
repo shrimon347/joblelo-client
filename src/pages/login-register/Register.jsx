@@ -47,10 +47,10 @@ const Register = () => {
         const user = {
           email,
           createdAt: createdAt,
-          name: name,
-          photo_url: photo_url,
+          displayName: name,
+          photoURL: photo_url,
         };
-        fetch("https://tour-server-rouge.vercel.app/user", {
+        fetch("https://joblelo-server.vercel.app/user", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -229,9 +229,10 @@ const Register = () => {
                       </Link>
                     </div>
                     <div className="divider text-green-900">continue with</div>
-                    <GoogleAuth />
+                    
                   </div>
                 </form>
+                <GoogleAuth />
               </div>
               <div className="px-6 py-2 bg-slate-50 dark:bg-slate-800 text-center">
                 <p className="mb-0 text-gray-400 font-medium">

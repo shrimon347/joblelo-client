@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 const Hero = () => {
   return (
     <div>
-      <section className="relative table w-full py-36 bg-[url('src/assets/hero/bg.jpg')] bg-top bg-no-repeat bg-cover">
+      <section className="relative table w-full py-36 bg-[url('/src/assets/hero/bg.jpg')] bg-top bg-no-repeat bg-cover">
         <div className="absolute inset-0 bg-blue-900/90"></div>
         <div className="">
           <div className="grid grid-cols-1 text-center mt-10 ">

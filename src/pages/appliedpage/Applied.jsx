@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import Explore from "../../components/shared/Explore";
+import Footer from "../../components/shared/Footer";
 import Navbar from "../../components/shared/Navbar";
 import Support from "../../components/shared/Support";
 import { AuthContext } from "../../provider/AuthProvider";
 import JobPage from "../alljobpage/JobPage";
 import HeroApply from "./HeroApply";
-import Footer from "../../components/shared/Footer";
 
 const Applied = () => {
   const { user } = useContext(AuthContext);
@@ -14,27 +14,27 @@ const Applied = () => {
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
-  const [filteredapplyJobs, setFilteredapplyJobs] = useState(filteredJobs);
-
-
+  const [filteredapplyJobs, setFilteredapplyJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAppliedJobs = async () => {
+      setLoading(true);
       const res = await fetch(
-        `http://localhost:5000/appliedjobs?email=${user.email}`
+        `https://joblelo-server.vercel.app/appliedjobs?email=${user.email}`
       );
       const data = await res.json();
       setAppliedJobs(data);
     };
 
     const fetchJobs = async () => {
-      const res = await fetch(`http://localhost:5000/jobpost`);
+      setLoading(true);
+      const res = await fetch(`https://joblelo-server.vercel.app/jobpost`);
       const data = await res.json();
       setJobs(data);
     };
 
-    fetchAppliedJobs();
-    fetchJobs();
+    fetchAppliedJobs().then(fetchJobs).finally(() => setLoading(false));
   }, [user.email]);
 
   useEffect(() => {
@@ -47,9 +47,9 @@ const Applied = () => {
     filterJobs();
   }, [appliedJobs, jobs]);
 
-
   const handleJobFilter = (e) => {
     e.preventDefault();
+    setLoading(true);
     const filtered = filteredJobs.filter((job) => {
       return (
         (country === "" || job.country === country) &&
@@ -58,6 +58,7 @@ const Applied = () => {
     });
 
     setFilteredapplyJobs(filtered);
+    setLoading(false);
   };
 
   return (
@@ -65,7 +66,7 @@ const Applied = () => {
       <Navbar />
       <HeroApply />
       <div className="max-w-7xl mx-auto">
-      <div className="bg-white dark:bg-slate-800 border-0 shadow rounded p-3 mt-10">
+        <div className="bg-white dark:bg-slate-800 border-0 shadow rounded p-3 mt-10">
           <form onSubmit={handleJobFilter}>
             <div className="registration-form text-dark text-start">
               <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:gap-5 gap-6">
@@ -85,6 +86,7 @@ const Applied = () => {
                   onChange={(e) => setCountry(e.target.value)}
                   value={country}
                 >
+                  <option value="">All Countries</option>
                   <option value="Bangladesh">Bangladesh</option>
                   <option value="India">India</option>
                   <option value="Canada">Canada</option>
@@ -100,19 +102,22 @@ const Applied = () => {
           </form>
         </div>
         <div className="grid grid-cols-1 gap-[30px] mt-[30px]">
-        {filteredapplyJobs.length > 0 ? (
-            filteredapplyJobs.map((job) => (
-              <JobPage key={job._id} job={job} />
-            ))
+          {loading ? (
+            <div className="text-center mt-10">
+              <span className="loading loading-bars loading-lg"></span>
+            </div>
           ) : (
-            filteredJobs.map((job) => (
-              <JobPage key={job._id} job={job} />
-            ))
+            <>
+              {filteredapplyJobs.length > 0
+                ? filteredapplyJobs.map((job) => (
+                    <JobPage key={job._id} job={job} />
+                  ))
+                : filteredJobs.map((job) => <JobPage key={job._id} job={job} />)}
+            </>
           )}
         </div>
         <Support />
         <Explore />
-        
       </div>
       <Footer />
     </div>
@@ -120,3 +125,4 @@ const Applied = () => {
 };
 
 export default Applied;
+  

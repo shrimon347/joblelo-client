@@ -57,7 +57,7 @@ const Form = () => {
     // console.log(jobTitle,compnayName,categorie,JobType,location,salary,skills,qualifications,experience,country,address,rating,image,description);
     const newJobpost = {email:user.email,jobTitle,companyName,categorie,JobType,location,salary,skills,qualifications,experience,country,deadLine,rating,image,description,createdAt,jobApplicantsNumber}
     console.log(newJobpost);
-    fetch('http://localhost:5000/jobpost', {
+    fetch('https://joblelo-server.vercel.app/jobpost', {
         method: 'POST',
         headers: {
             'content-type': 'application/json'

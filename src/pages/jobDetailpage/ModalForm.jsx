@@ -28,7 +28,7 @@ const ModalForm = ({id,deadline}) => {
     const resumeLink = form.resumelink.value
     const newJobapply = {email:user.email,id,companyName,resumeLink}
     // console.log(newJobapply);
-    fetch(`http://localhost:5000/appliedjobs?email=${user.email}&id=${id}`)
+    fetch(`https://joblelo-server.vercel.app/appliedjobs?email=${user.email}&id=${id}`)
       .then(res => res.json())
       .then(data => {
         if (data.length > 0) {
@@ -40,7 +40,7 @@ const ModalForm = ({id,deadline}) => {
           });
         } else {
           document.getElementById("my_modal_4").close();
-          fetch('http://localhost:5000/appliedjobs', {
+          fetch('https://joblelo-server.vercel.app/appliedjobs', {
             method: 'POST',
             headers: {
               'content-type': 'application/json'
