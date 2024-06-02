@@ -75,7 +75,7 @@ const Register = () => {
     <div>
       <Navbar />
 
-      <section className="h-screen flex items-center justify-center relative overflow-hidden bg-[url('src/assets/hero/bg3.jpg')] bg-no-repeat bg-center bg-cover">
+      <section className="h-screen flex items-center justify-center relative overflow-hidden bg-[url('/src/assets/hero/bg3.jpg')] bg-no-repeat bg-center bg-cover">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
         <div className="container">
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1">

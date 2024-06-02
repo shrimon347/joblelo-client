@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { BiSolidEdit } from "react-icons/bi";
 import { MdCancel } from "react-icons/md";
@@ -16,12 +17,16 @@ const MyJobPost = () => {
 
   const url = `https://joblelo-server.vercel.app/jobpost?email=${user.email}`;
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setMylist(data);
-        setLoading(false);
-      });
+    axios.get(url, { withCredentials: true }).then((res) => {
+      setMylist(res.data);
+      setLoading(false);
+    });
+    // fetch(url)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setMylist(data);
+    //     setLoading(false);
+    //   });
   }, [url]);
 
   const handleToDelete = (_id) => {

@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import axios from "axios";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -18,21 +19,35 @@ const Login = () => {
     const email = form.get("email");
     const password = form.get("password");
     signIn(email, password)
-
       .then((result) => {
-        toast.success("User logged in successfully");
-        navigate(location?.state ? location.state : "/");
+        const loggedInuser = result.user;
+        console.log(loggedInuser);
+        const user = { email };
+
+        //get acces token
+        axios
+          .post("https://joblelo-server.vercel.app/jwt", user, { withCredentials: true })
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.success) {
+              console.log(res.data);
+              toast.success("User logged in successfully");
+              navigate(location?.state ? location.state : "/");
+            }else {
+              toast.error("Unauthorized ! Please Try Again");
+            }
+          });
       })
       .catch((error) => {
         toast.error("your email or password is incorrect");
       });
-      e.target.reset()
+    e.target.reset();
   };
   return (
     <div>
       <Navbar />
 
-      <section className="h-screen flex items-center justify-center relative overflow-hidden bg-[url('src/assets/hero/bg3.jpg')] bg-no-repeat bg-center bg-cover">
+      <section className="h-screen flex items-center justify-center relative overflow-hidden bg-[url('/src/assets/hero/bg3.jpg')] bg-no-repeat bg-center bg-cover">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
         <div className="container">
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
@@ -135,7 +150,6 @@ const Login = () => {
                       </Link>
                     </div>
                     <div className="divider text-green-900">continue with</div>
-                    
                   </div>
                 </form>
                 <GoogleAuth />

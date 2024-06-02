@@ -21,7 +21,7 @@ const Applied = () => {
     const fetchAppliedJobs = async () => {
       setLoading(true);
       const res = await fetch(
-        `https://joblelo-server.vercel.app/appliedjobs?email=${user.email}`
+        `https://joblelo-server.vercel.app/appliedjobs?email=${user.email}`, 
       );
       const data = await res.json();
       setAppliedJobs(data);

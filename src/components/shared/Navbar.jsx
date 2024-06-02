@@ -9,7 +9,7 @@ const Navbar = () => {
 
   const { user, logout } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState(null);
-  const [loading, setLoading] = useState(true)
+
 
   // Apply the theme to the document on component mount and theme change
   useEffect(() => {
@@ -63,7 +63,6 @@ const Navbar = () => {
       const data = await response.json();
       if (Array.isArray(data) && data.length > 0) {
         setUserInfo(data[0]);
-        setLoading(false)
       }
 
     } catch (error) {
