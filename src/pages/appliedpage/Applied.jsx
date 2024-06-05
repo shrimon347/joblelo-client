@@ -6,6 +6,7 @@ import Support from "../../components/shared/Support";
 import { AuthContext } from "../../provider/AuthProvider";
 import JobPage from "../alljobpage/JobPage";
 import HeroApply from "./HeroApply";
+import axios from "axios";
 
 const Applied = () => {
   const { user } = useContext(AuthContext);
@@ -20,11 +21,8 @@ const Applied = () => {
   useEffect(() => {
     const fetchAppliedJobs = async () => {
       setLoading(true);
-      const res = await fetch(
-        `https://joblelo-server.vercel.app/appliedjobs?email=${user.email}`, 
-      );
-      const data = await res.json();
-      setAppliedJobs(data);
+      const res = await axios.get(`https://joblelo-server.vercel.app/appliedjobs?email=${user.email}`,{withCredentials:true});
+      setAppliedJobs(res.data);
     };
 
     const fetchJobs = async () => {

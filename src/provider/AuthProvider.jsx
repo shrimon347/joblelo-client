@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
+import axios from "axios";
 
 export const AuthContext = createContext(null)
 const auth = getAuth(app)
@@ -49,6 +50,14 @@ const AuthProvider = ({ children }) => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
             setLoading(false)
+
+            if(currentUser) {
+                const loggedUser = {email : currentUser.email}
+                axios.post("https://joblelo-server.vercel.app/jwt",loggedUser, {withCredentials:true})
+                .then(res => {
+                    console.log("token res",res.data);
+                })
+            }
         })
         return () => {
             unSubscribe()
